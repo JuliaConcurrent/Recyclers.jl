@@ -19,9 +19,7 @@ jobs:
         nthreads:
           - '1'
           - '2'
-          - '4'
           - '8'
-          - '16'
       fail-fast: false
     name: Test Julia ${{ matrix.julia-version }} nthreads=${{ matrix.nthreads }}
     steps:
