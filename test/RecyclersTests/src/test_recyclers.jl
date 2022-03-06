@@ -59,11 +59,11 @@ function check_concurrency(recycler; ntrials = 2^10, ntasks = Threads.nthreads()
     @test sum(getindex, failures) == 0
 end
 
-function test_concurrency(ntrials = 2^10)
-    @testset "$(nameof(R))" for R in Utils.recycler_types()
-        @testset for oversubscribe in [1, 3]
-            check_concurrency(R(zeros3); ntasks = Threads.nthreads() * oversubscribe)
-        end
+for R in Utils.recycler_types(), oversubscribe in [1, 3]
+    @eval function $(Symbol(:test_concurrency_, nameof(R), :_, Symbol(oversubscribe)))(
+        ntrials = 2^10,
+    )
+        check_concurrency($R(zeros3); ntasks = Threads.nthreads() * $oversubscribe)
     end
 end
 
