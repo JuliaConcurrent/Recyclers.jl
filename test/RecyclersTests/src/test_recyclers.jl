@@ -46,7 +46,6 @@ function check_concurrency(recycler; ntrials = 2^10, ntasks = Threads.nthreads()
     @sync for fs in failures
         Threads.@spawn begin
             tmp = Recyclers.get!(recycler)
-            tmp = zeros3()
             for _ in 1:ntrials
                 Recyclers.recycling!(recycler) do xs
                     rand!(tmp)
