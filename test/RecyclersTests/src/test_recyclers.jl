@@ -59,6 +59,8 @@ function check_concurrency(recycler; ntrials = 2^10, ntasks = Threads.nthreads()
     @test sum(getindex, failures) == 0
 end
 
+# Since `check_concurrency` can be time-confusing, separate test cases to functions so that
+# `TestFunctionRunner` can terminate the test at a more granular unit.
 for R in Utils.recycler_types(), oversubscribe in [1, 3]
     @eval function $(Symbol(:test_concurrency_, nameof(R), :_, Symbol(oversubscribe)))(
         ntrials = 2^10,
