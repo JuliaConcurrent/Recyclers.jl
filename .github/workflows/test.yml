@@ -36,7 +36,7 @@ jobs:
   # A job that succeeds if and only if all jobs in `test` succeed.
   all-success:
     if: always() && github.event.pull_request
-    needs: test
+    needs: vanilla-test
     runs-on: ubuntu-latest
     steps:
       # https://github.com/tkf/merge-conclusions-action
